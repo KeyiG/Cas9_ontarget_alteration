@@ -1,0 +1,82 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+  html_notebook: default
+  pdf_document: default
+---
+
+#These are the scripts used for plotting Xdrop raw (uncorrected) data coverage at chr17 around target loci.
+
+```{r}
+library(GenomicRanges)
+library(GenomicAlignments)
+#uncorrected, raw reads alignment of HAP1 t72
+HAP1_t72_alichr <-  readGAlignments("/Users/keyigeng/Dropbox/Xdrop_data/align_wholehg38/HAP1_t72_Bar01_wholehg38_sorted.bam")
+HAP1_t72_alichr_cov <- coverage(HAP1_t72_alichr)
+HAP1_t72_alichr_cov_tar <- GRanges("chr17",IRanges(39090000,39220000))
+HAP1_t72_alichr_xnum <- as.numeric(HAP1_t72_alichr_cov$chr17[ranges(HAP1_t72_alichr_cov_tar)])
+HAP1_t72_alichr_cov_tar_zi <- GRanges("chr17",IRanges(39140000,39160000))
+HAP1_t72_alichr_xnum_zi <- as.numeric(HAP1_t72_alichr_cov$chr17[ranges(HAP1_t72_alichr_cov_tar_zi)])
+
+#uncorrected, raw reads alignment of HepG2 t15
+HepG2_t15_alichr <-  readGAlignments("/Users/keyigeng/Dropbox/Xdrop_data/align_wholehg38/HepG2_t15_Bar02_wholehg38_sorted.bam")
+HepG2_t15_alichr_cov <- coverage(HepG2_t15_alichr)
+HepG2_t15_alichr_cov_tar <- GRanges("chr17",IRanges(39090000,39220000))
+HepG2_t15_alichr_xnum <- as.numeric(HepG2_t15_alichr_cov$chr17[ranges(HepG2_t15_alichr_cov_tar)])
+HepG2_t15_alichr_cov_tar_zi <- GRanges("chr17",IRanges(39140000,39160000))
+HepG2_t15_alichr_xnum_zi <- as.numeric(HepG2_t15_alichr_cov$chr17[ranges(HepG2_t15_alichr_cov_tar_zi)])
+plot(HepG2_t15_alichr_xnum, type="l", col="#239EF9", lwd=2, xlab="position", ylab="coverage")
+
+library(dplyr)
+library(tibble)
+library(ggplot2)
+HepG2_alichr_xnum_ggp <- as.data.frame(HepG2_t15_alichr_xnum) %>% tibble::rowid_to_column(var="re_position") %>% dplyr::rename(coverage=HepG2_t15_alichr_xnum) %>% dplyr::mutate(position=re_position+39090000)
+HAP1_alichr_xnum_ggp <- as.data.frame(HAP1_t72_alichr_xnum) %>% tibble::rowid_to_column(var="re_position") %>% dplyr::rename(coverage=HAP1_t72_alichr_xnum)  %>% dplyr::mutate(position=re_position+39090000)
+HepG2_alichr_xnum_ggp_zi <- as.data.frame(HepG2_t15_alichr_xnum_zi) %>% tibble::rowid_to_column(var="re_position") %>% dplyr::rename(coverage=HepG2_t15_alichr_xnum_zi) %>% dplyr::mutate(position=re_position+39140000)
+HAP1_alichr_xnum_ggp_zi <- as.data.frame(HAP1_t72_alichr_xnum_zi) %>% tibble::rowid_to_column(var="re_position") %>% dplyr::rename(coverage=HAP1_t72_alichr_xnum_zi)  %>% dplyr::mutate(position=re_position+39140000)
+
+ggplot(data=HepG2_alichr_xnum_ggp, aes(x=position, y=coverage)) +
+  geom_line() +
+  theme_bw() +
+  geom_rect(aes(xmin = 39153698, xmax = 39154570, ymin = -Inf, ymax = Inf),
+                   fill = "pink", alpha = 0.01) +
+  theme(text=element_text(size = 20)) +
+  xlim(39090000,39220000)
+ggsave("/Users/keyigeng/Dropbox/Xdrop_data/figure_drafting/HepG2_t15_target_coverage.pdf")
+ggplot(data=HAP1_alichr_xnum_ggp, aes(x=position, y=coverage)) +
+  geom_line() +
+  theme_bw() +
+  geom_rect(aes(xmin = 39153698, xmax = 39154570, ymin = -Inf, ymax = Inf),
+                   fill = "pink", alpha = 0.01)+
+  xlim(39090000,39220000) +
+  theme(text=element_text(size = 20))
+ggsave("/Users/keyigeng/Dropbox/Xdrop_data/figure_drafting/HAP1_t72_target_coverage.pdf")
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
