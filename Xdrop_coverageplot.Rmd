@@ -57,7 +57,7 @@ ggsave("/Users/keyigeng/Dropbox/Xdrop_data/figure_drafting/HAP1_t72_target_cover
 
 ```
 
-
+#the same script are used for HepG2 t8, for HepG2 i50, the rest of the scripts are all same only one changed at line 43 or line 51: for intergenic region deletion clone, xmin=39153824, xmax=39154456
 
 
 
