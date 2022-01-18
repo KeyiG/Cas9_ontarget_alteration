@@ -20,10 +20,9 @@ conda activate sacra
 module load bioinfo-tools
 module load samtools
 
-#run SACRA to correct chimeric read for both HAP1 t72 and HepG2 t15 after canu correction. 
-sh SACRA.sh -i /proj/LRS/canu_cor/HAP1_t72_1stcor.correctedReads.fasta -p /proj/LRS/chimeric_cor/HAP1_t72_SACRA_cor -t 16 -c config_HAP1_t72.yml
-sh SACRA.sh -i /proj/LRS/canu_cor/HepG2_t15_1stcor.correctedReads.fasta -p /proj/LRS/chimeric_cor/HepG2_t15_SACRA_cor -t 16 -c config_HepG2_t15.yml
+#run SACRA to correct chimeric read after canu correction. sample.correctedReads.fasta here is the canu corrected reads for our Xdrop-LRS data for different samples.
+sh SACRA.sh -i /proj/LRS/canu_cor/sample.correctedReads.fasta -p /proj/LRS/chimeric_cor/sample_SACRA_cor -t 16 -c config.yml
 
 conda deactivate
 
-#config_HAP1_t72.yml and config_HepG2_t15.yml used the same parameter as SACRA default config.yml except parameter pc. for HAP1, pc:50, for HepG2, pc:100
+#config.yml and config_HepG2_t15.yml used the same parameter as SACRA default except parameter pc and sl. for HAP1 t72, HepG2 t8, HepG2 i50: pc:50, for HepG2 t15, pc:100, and for all samples, sl is 1000.
