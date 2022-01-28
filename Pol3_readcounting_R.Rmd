@@ -7,7 +7,7 @@ output: html_notebook
 ```{r}
 library(dplyr)
 library(stringr)
-Pol3_count_ontarget <- read.delim("/Users/keyigeng/Dropbox/illuminadata/ChIP_Cas9_ontargetpaper/Cas9_ontarget_pol3_counting.txt") %>%
+Pol3_count_ontarget <- read.delim("/Users/ChIP_Cas9_ontargetpaper/Cas9_ontarget_pol3_counting.txt") %>%
   dplyr::filter(str_detect(name, "tRNA-")) %>%
   tidyr::separate(name, c("tRNA", "isotype", "isoacceptor", "number1", "number12"), remove = F ) %>%
   dplyr::select(name,  isotype, isoacceptor, CK0235_HepG2_dele_pol3, CK0501_HAP1_px459_col3, CK0516_HAP1_t72_Pol3, do1093_HepG2_ctrl_pol3) %>%
@@ -31,14 +31,13 @@ Pol3_count_ontarget_target_p <- as.data.frame(colSums(Pol3_count_ontarget_target
 colnames(Pol3_count_ontarget_target_p) <- c("Normalised_count") 
 Pol3_count_ontarget_target_p <- Pol3_count_ontarget_target_p %>%
   tibble::rownames_to_column(var="sample") %>%
-  tibble::add_row(sample=c("HAP1_expected_del", "HepG2_expected_del"), Normalised_count=c(0,0)) %>%
-  dplyr::mutate(cell=c("HepG2", "HAP1", "HAP1", "HepG2", "HAP1", "HepG2")) 
+  dplyr::mutate(cell=c("HepG2", "HAP1", "HAP1", "HepG2")) 
 plot_pol3_occ = function(x) {
   library(ggplot2)
   ggplot(Pol3_count_ontarget_target_p %>% dplyr::filter(cell==x), aes(sample, Normalised_count, fill=sample)) +
     facet_grid(cols = vars(cell)) +
     geom_bar(stat="identity", color="black") +
-    scale_fill_manual(values=c("#62B4EC", "white", "#FB6B01")) +
+    scale_fill_manual(values=c("#62B4EC", "#FB6B01")) +
     theme_bw(base_size = 15) +
     ylab("normalised reads-count") +
     xlab("")
