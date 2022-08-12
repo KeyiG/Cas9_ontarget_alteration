@@ -1,5 +1,5 @@
 # Cas9_ontarget_alteration
-This repositories contains scripts that used for the paper title: "Target-enriched nanopore sequencing and de novo assembly reveals co-occurrences of complex on-target genomic rearrangements induced by CRISPR/Cas9 in human cells"
+This repository contains scripts that used for the paper title: "Target-enriched nanopore sequencing and de novo assembly reveals co-occurrences of complex on-target genomic rearrangements induced by CRISPR/Cas9 in human cells"
 
 The folder ChIP-seq contains scripts for analyzing ChIP-seq data. 
 
