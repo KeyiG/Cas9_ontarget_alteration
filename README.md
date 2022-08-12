@@ -11,4 +11,3 @@ For the users' convenience, we put the our customized de novo assembly workflow 
 
 Xdrop_coverageplot.Rmd contains R script for processing and plotting coverage.
 
-Pol3_readcounting_R.Rmd contains R script for normalizing, applying cutoff and plotting the Pol III read count at target tRNA gene loci: tRNA-Cys-GCA-2-3 & tRNA-Cys-GCA-2-4.
